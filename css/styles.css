@@ -156,16 +156,47 @@ body {
 }
 
 /* Insights Box */
-.insights-box {
-  background-color: rgba(217, 236, 255, 0.6); 
-  color: #007bff;
-  font-size: 16px;
+/* Insights Section */
+#insightsSection {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Create columns that auto adjust */
+  gap: 20px; /* Space between the columns */
+  padding: 20px;
+  justify-items: center; /* Center items within each grid cell */
+}
+
+.insight-category {
+  background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
   padding: 15px;
   border-radius: 8px;
-  line-height: 1.6;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  text-align: right;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: left;
 }
+
+.insight-category h5 {
+  color: #007bff; /* Color for the category heading */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.insight-category ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.insight-category li {
+  font-size: 16px;
+  margin: 5px 0;
+  color: #333;
+}
+
 
 
 /* Chart Cards */
