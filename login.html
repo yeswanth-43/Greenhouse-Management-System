@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - Greenhouse Management</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h2 class="login-title">Greenhouse Manager</h2>
+      <p class="login-subtitle">Sign in to your account</p>
+      <form id="loginForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username or Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Enter your username or email"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success w-100">Login</button>
+      </form>
+      <div class="text-center mt-3">
+        <span>Don't have an account?</span>
+        <a href="signup.html" class="signup-link">Sign Up</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+</body>
+</html>

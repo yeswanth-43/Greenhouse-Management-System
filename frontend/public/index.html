@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Greenhouse Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="spinner-container">
+      <div class="spinner">
+        <span class="spinner-text">
+          LOADING<br/>
+          please wait...
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg custom-green-nav">
+    <div class="container-fluid">
+      <!-- Website Logo and Name -->
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-cloud-sun fa-2x"></i>
+        <span class="ms-2">Greenhouse Manager</span>
+      </a>
+      
+      <!-- Navbar Toggler (Hamburger Menu for Small Screens) -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible Navigation Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white" href="index.html">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="settings.html">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="reports.html">Reports</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="alerts.html">Alerts</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="support.html">Support</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="#" id="logoutButton">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Container -->
+  <div class="dashboard-container container my-4" id="main-content" style="display:none;">
+    <h1 class="text-center dashboard-heading">Greenhouse Dashboard</h1>
+    <p class="location-text text-center" id="location">Unknown Location</p>
+
+     <!-- Metric Cards -->
+     <div class="row g-4 metric-row">
+      <div class="col-md-4">
+        <div class="metric-card card text-center" id="tempCard">
+          <h5 class="metric-title">Temperature <i class="fas fa-thermometer-half"></i></h5>
+          <p class="metric-value" id="temp">Loading...</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="metric-card card text-center" id="humidityCard">
+          <h5 class="metric-title">Humidity <i class="fas fa-tint"></i></h5>
+          <p class="metric-value" id="humidity">Loading...</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="metric-card card text-center" id="soilCard">
+          <h5 class="metric-title">Soil Moisture <i class="fas fa-seedling"></i></h5>
+          <p class="metric-value" id="soilMoisture">No Data</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Insights -->
+    <div class="mt-4">
+      <h4>Insights</h4>
+      <!-- Add the image at the start of the insights section -->
+      <div class="insights-box" id="aiInsights">
+        🥬 <strong>Leafy Greens (Great for all-year greenhouse growing)</strong><br/>
+        - Lettuce (e.g., Romaine, Butterhead)<br/>
+        - Spinach<br/>
+        - Kale<br/>
+        - Swiss Chard<br/>
+        - Arugula<br/>
+        - Mustard Greens<br/>
+        - Collard Greens<br/>
+        - Endive<br/>
+        - Mizuna<br/>
+        - Bok Choy<br/>
+        - Tatsoi<br/><br/>
+
+        🥕 <strong>Root Vegetables</strong><br/>
+        - Carrots<br/>
+        - Radishes<br/>
+        - Beets<br/>
+        - Turnips<br/>
+        - Parsnips<br/>
+        - Onions<br/>
+        - Garlic<br/>
+        - Shallots<br/><br/>
+
+        🥦 <strong>Cruciferous Vegetables</strong><br/>
+        - Broccoli<br/>
+        - Cauliflower<br/>
+        - Cabbage<br/>
+        - Brussels Sprouts<br/>
+        - Kohlrabi<br/><br/>
+
+        🍅 <strong>Fruiting Vegetables</strong> (Require more heat/light)<br/>
+        - Tomatoes<br/>
+        - Cucumbers<br/>
+        - Peppers (Bell, Chili, etc.)<br/>
+        - Eggplant<br/>
+        - Zucchini<br/>
+        - Squash<br/>
+        - Okra<br/><br/>
+
+        🌱 <strong>Herbs</strong> (Easy in small greenhouses or hydroponics)<br/>
+        - Basil<br/>
+        - Parsley<br/>
+        - Cilantro<br/>
+        - Dill<br/>
+        - Thyme<br/>
+        - Oregano<br/>
+        - Sage<br/>
+        - Mint<br/>
+        - Chives<br/>
+        - Rosemary<br/><br/>
+
+        🫘 <strong>Legumes</strong><br/>
+        - Green Beans<br/>
+        - Snap Peas<br/>
+        - Snow Peas<br/>
+        - Lima Beans (with warmth)<br/><br/>
+
+        🌿 <strong>Specialty Greens</strong> (Asian greens, microgreens, etc.)<br/>
+        - Mâche (Corn Salad)<br/>
+        - Sorrel<br/>
+        - Watercress<br/>
+        - Microgreens (Sunflower, Radish, Pea Shoots, etc.)<br/>
+        - Amaranth greens<br/>
+        - Malabar Spinach<br/>
+      </div>
+    </div>
+
+   
+
+    <!-- Charts -->
+    <div class="row mt-4 g-4">
+      <div class="col-md-6">
+        <div class="chart-card p-3">
+          <h4 class="chart-title">Temperature 24-Hour Trend</h4>
+          <div class="chart-container">
+            <canvas id="chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="chart-card p-3">
+          <h4 class="chart-title">Humidity 24-Hour Trend</h4>
+          <div class="chart-container">
+            <canvas id="humidityChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <!-- Floating Live Chat Button -->
+  <button id="liveChatButton" class="floating-chat">
+    <i class="fa fa-comment"></i>
+  </button>
+
+  <!-- Live Chat Box -->
+  <div id="liveChatBox" class="chat-box d-none">
+    <div class="chat-header">
+      <h5>Live Chat</h5>
+      <button id="closeChat" class="btn-close" aria-label="Close"></button>
+    </div>
+    <div class="chat-body" id="chatMessages"></div>
+    <div class="chat-footer">
+      <input type="text" id="chatInput" placeholder="Type a message..." class="form-control"/>
+      <button><i class="fa fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="fixed-footer">
+    © 2025 Greenhouse Management. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+  </footer>
+
+  <script src="js/darkmode.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/liveChat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.onload = function(){
+      setTimeout(function(){
+        document.getElementById("loading-screen").style.display = "none";
+      }, 1000);
+    };
+  </script>
+</body>
+</html>

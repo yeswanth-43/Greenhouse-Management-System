@@ -1,0 +1,335 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('th (3).jpeg'); 
+  background-size: cover;
+  background-position: center;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+
+.dark-mode {
+  background-color: #006400;
+  color: #fff;
+}
+
+.dark-mode .chat-box,
+.dark-mode .chat-footer {
+  background-color: #333;
+}
+
+/* Loading Screen */
+#loading-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.spinner-container {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 25px;
+  border-radius: 15px;
+  border: 5px solid #28a745;
+}
+
+.spinner {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 25px solid rgba(40,167,69,0.3);
+  border-top-color: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #fff;
+}
+
+.spinner-text {
+  color: #28a745;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  white-space: nowrap;
+}
+
+/* Navbar */
+.custom-green-nav {
+  background: linear-gradient(160deg, #2e8b57 0%, #196F3D 100%); /* Green gradient */
+  padding: 10px 15px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-nav .nav-link {
+  font-size: 16px;
+  padding: 10px 15px;
+  color: #fff !important;
+  transition: background-color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: rgba(255,255,255,0.2); /* Lighter on hover */
+  border-radius: 5px;
+}
+
+/* Settings Container */
+.settings-container {
+  max-width: 1200px;
+  background: linear-gradient(135deg, rgba(240, 255, 240, 0.8), rgba(230, 255, 230, 0.8)); 
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+
+.settings-heading {
+  color: #333;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.settings-subtext {
+  color: #444;
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+/* Cards */
+.settings-card {
+  background-color: rgba(255,255,255,0.9); /* Slightly translucent white */
+  border-radius: 10px;
+  box-shadow: none;
+  padding: 15px;
+  transition: transform 0.3s ease-in-out;
+  background: linear-gradient(145deg, #f0f8ff, #d4f1f9); /* Light gradient background */
+}
+
+.settings-card:hover {
+  transform: scale(1.05); /* Slight scale up on hover */
+}
+
+.settings-card .card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.settings-card .card-text {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Form Inputs */
+form {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+form .form-label {
+  color: #333;
+  font-size: 14px;
+}
+
+form .form-control {
+  border-radius: 8px;
+  font-size: 15px;
+  border: 1px solid #007bff; /* Blue border */
+  transition: border-color 0.3s ease;
+}
+
+form .form-control:focus {
+  border-color: #0056b3; /* Darker blue on focus */
+  box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+form .btn-primary {
+  background-color: #007bff; /* Blue button */
+  border: none;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  padding: 10px 20px;
+}
+
+form .btn-primary:hover {
+  background-color: #0056b3; /* Darker blue hover */
+}
+
+form .btn-secondary {
+  background-color: #ff5e5e; /* Red button for cancel */
+  border: none;
+  padding: 10px 20px;
+}
+
+form .btn-secondary:hover {
+  background-color: #ff1f1f; /* Darker red hover */
+}
+
+/* Floating Chat */
+.floating-chat {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #28a745; /* Green floating button */
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  font-size: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.floating-chat:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Chat Box */
+.chat-box {
+  position: fixed;
+  bottom: 120px;
+  right: 20px;
+  width: 350px;
+  background-color: #28a745;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 99;
+  max-height: 400px;
+  height: auto;
+  min-height: 250px;
+  transition: height 0.3s ease;
+}
+
+.chat-header {
+  padding: 12px 15px;
+  background-color: #218838;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #1c7a2b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #e9f7e3;
+}
+
+.chat-footer {
+  display: flex;
+  padding: 10px 15px;
+  border-top: 1px solid #1c7a2b;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chat-footer input {
+  flex-grow: 1;
+  margin-right: 10px;
+  border-radius: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.chat-footer button {
+  background-color: #218838;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.chat-footer button:hover {
+  background-color: #1c7a2b;
+}
+
+.chat-header .btn-close {
+  color: #fff;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.chat-header .btn-close:hover {
+  background-color: #1c7a2b;
+}
+
+/* Fixed Footer */
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: none;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.fixed-footer a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.fixed-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width:768px){
+  .navbar-brand span {
+    font-size: 18px;
+  }
+  .settings-container {
+    margin: 10px;
+    padding: 20px;
+  }
+  .chat-box {
+    width: 250px;
+  }
+}
+
+.text-center {
+  width: 100%;
+  max-width: 600px; 
+  margin: 0 auto;
+  text-align: center;
+}
+
+.text-center img {
+  width: 100%;
+  height: auto;
+  max-height: 400px; 
+  object-fit: contain;
+}
