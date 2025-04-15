@@ -10,11 +10,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // LOGOUT
   const logoutButton = document.getElementById("logoutButton");
-  logoutButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    alert("Logged out successfully!");
-    window.location.href = "login.html";
-  });
+  if (logoutButton) {
+    logoutButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      alert("Logged out successfully!");
+      window.location.href = "login.html";
+    });
+  }
 
   const tempElement = document.getElementById("temp");
   const humidityElement = document.getElementById("humidity");
@@ -27,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Simulate past data for charts
   let temperatureData = generatePastData(24, 20, 30); // Last 24 hours, min 20°C, max 30°C
   let timestamps = generateTimestamps(24);
-  let humidityData = generatePastData(24, 40, 80); // Last 24 hours, min 40%, max 80%
+  let humidityData = generatePastData(24, 40, 60); // Last 24 hours, min 40%, max 60%
   let humidityTimestamps = timestamps.slice(); // Clone timestamps for humidity
 
   initCharts();
@@ -39,7 +41,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Extract city, latitude, and longitude from the user location
     const locationParts = userLocation.split(', ');
     const city = locationParts[0];
-    const country = locationParts[1];
 
     // Fetch the weather data using Open-Meteo API
     const weatherData = await getWeatherData(city);
@@ -63,21 +64,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateCharts(currentDate.getHours() + ":" + currentDate.getMinutes());
   }
 
-  // Fetch weather data from Open-Meteo API based on latitude and longitude
+  // Fetch weather data from Open-Meteo API based on the city
   async function getWeatherData(city) {
     try {
-      // Using Open-Meteo API to get weather data based on city name and latitude/longitude
+      // Fetch latitude and longitude using Open-Meteo Geocoding API
       const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=en`);
       const geoData = await geoResponse.json();
       const latitude = geoData.results[0].latitude;
       const longitude = geoData.results[0].longitude;
 
+      // Fetch current weather data using Open-Meteo Forecast API
       const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
       const weatherData = await weatherResponse.json();
 
+      // Log the API response for debugging purposes
+      console.log("Weather API Response:", weatherData);
+
+      // Check if the data exists and access the current weather data
       if (weatherData && weatherData.current_weather) {
         const temperature = weatherData.current_weather.temperature; // Temperature in Celsius
-        const humidity = weatherData.current_weather.humidity; // Humidity in percentage
+        const humidity = generateHumidity(temperature); // Generate humidity based on temperature
+
         return { temperature, humidity };
       } else {
         console.error("Error fetching weather data:", weatherData);
@@ -100,6 +107,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
       console.error("Error fetching location", error);
       return "Unknown Location";
+    }
+  }
+
+  // Function to generate humidity based on temperature
+  function generateHumidity(temperature) {
+    // If temperature is high, generate lower humidity
+    if (temperature > 25) {
+      return Math.floor(Math.random() * 20) + 40; // Between 40% and 60% for higher temperatures
+    } else if (temperature > 15) {
+      return Math.floor(Math.random() * 20) + 50; // Between 50% and 70% for moderate temperatures
+    } else {
+      return Math.floor(Math.random() * 20) + 60; // Between 60% and 80% for lower temperatures
     }
   }
 
