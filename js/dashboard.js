@@ -35,14 +35,80 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchWeatherData() {
     const userLocation = await getUserLocation();
     locationElement.textContent = userLocation;
+
+    // Extract city, latitude, and longitude from the user location
+    const locationParts = userLocation.split(', ');
+    const city = locationParts[0];
+    const country = locationParts[1];
+
+    // Fetch the weather data using Open-Meteo API
+    const weatherData = await getWeatherData(city);
+
+    if (weatherData) {
+      const { temperature, humidity } = weatherData;
+
+      // Update the temperature and humidity display
+      tempElement.textContent = `${temperature}°C`;
+      humidityElement.textContent = `${humidity}%`;
+
+      // Simulate updating the charts with real-time data
+      updateCharts(temperature, humidity);
+    } else {
+      // If weather data is not available, show fallback values
+      tempElement.textContent = "Failed to load";
+      humidityElement.textContent = "Failed to load";
+    }
+
     const currentDate = new Date();
     updateCharts(currentDate.getHours() + ":" + currentDate.getMinutes());
   }
 
+  // Fetch weather data from Open-Meteo API based on latitude and longitude
+  async function getWeatherData(city) {
+    try {
+      // Using Open-Meteo API to get weather data based on city name and latitude/longitude
+      const geoResponse = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&language=en`);
+      const geoData = await geoResponse.json();
+      const latitude = geoData.results[0].latitude;
+      const longitude = geoData.results[0].longitude;
+
+      const weatherResponse = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+      const weatherData = await weatherResponse.json();
+
+      if (weatherData && weatherData.current_weather) {
+        const temperature = weatherData.current_weather.temperature; // Temperature in Celsius
+        const humidity = weatherData.current_weather.humidity; // Humidity in percentage
+        return { temperature, humidity };
+      } else {
+        console.error("Error fetching weather data:", weatherData);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      return null;
+    }
+  }
+
+  // Function to get user's geolocation (latitude and longitude)
+  async function getUserLocation() {
+    try {
+      const response = await fetch("https://ipapi.co/json/");
+      if (response.ok) {
+        const data = await response.json();
+        return data.city ? `${data.city}, ${data.country_name}` : "Unknown Location";
+      }
+    } catch (error) {
+      console.error("Error fetching location", error);
+      return "Unknown Location";
+    }
+  }
+
+  // Function to generate past data for temperature and humidity
   function generatePastData(hours, min, max) {
     return Array.from({ length: hours }, () => Math.floor(Math.random() * (max - min + 1) + min));
   }
 
+  // Function to generate timestamps for the chart
   function generateTimestamps(hours) {
     let result = [];
     for (let i = 1; i <= hours; i++) {
@@ -51,6 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return result;
   }
 
+  // Chart initialization
   function initCharts() {
     temperatureChart = new Chart(chartCanvas, {
       type: "line",
@@ -85,23 +152,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  function updateCharts(timeLabel) {
-    // Simulate real-time data update
+  // Function to update charts with new temperature and humidity data
+  function updateCharts(temperature, humidity) {
+    // Update temperature and humidity data for charts (real-time)
     temperatureData.shift();
-    temperatureData.push(Math.floor(Math.random() * (30 - 20 + 1) + 20));
-    humidityData.shift();
-    humidityData.push(Math.floor(Math.random() * (80 - 40 + 1) + 40));
+    temperatureData.push(temperature);
 
-    // Update labels
+    humidityData.shift();
+    humidityData.push(humidity);
+
+    // Update chart labels to reflect current time
+    const timeLabel = new Date().getHours() + ":" + new Date().getMinutes();
     timestamps.shift();
     timestamps.push(timeLabel);
+
     humidityTimestamps.shift();
     humidityTimestamps.push(timeLabel);
 
+    // Update the charts
     temperatureChart.update();
     humidityChart.update();
   }
 
+  // Chart options configuration
   function getChartOptions(xLabel, yLabel) {
     return {
       responsive: true,
@@ -123,19 +196,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       }
     };
-  }
-
-  async function getUserLocation() {
-    try {
-      const response = await fetch("https://ipapi.co/json/");
-      if (response.ok) {
-        const data = await response.json();
-        return data.city ? `${data.city}, ${data.country_name}` : "Unknown Location";
-      }
-    } catch (error) {
-      console.error("Error fetching location", error);
-      return "Unknown Location";
-    }
   }
 
   // Start fetching data
